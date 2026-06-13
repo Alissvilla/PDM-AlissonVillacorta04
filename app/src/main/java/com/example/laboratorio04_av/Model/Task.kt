@@ -1,13 +1,22 @@
 package com.example.laboratorio04_av.Model
 
-import java.util.Date
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
+@Entity(tableName = "tasks")
 data class Task(
-    val id: Int,
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
+
     val title: String,
+
     val description: String,
-    val endDate: Date = Date(),
-    val isCompleted: Boolean = false
+
+    val endDate: Long = System.currentTimeMillis(),
+
+    @ColumnInfo(name = "is_complete")
+    val isComplete: Boolean = false
 )
 
 

@@ -33,7 +33,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.laboratorio04_av.ViewModel.GeneralViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)

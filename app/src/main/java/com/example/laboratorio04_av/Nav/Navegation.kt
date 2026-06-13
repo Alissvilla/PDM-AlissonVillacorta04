@@ -1,6 +1,5 @@
 package com.example.laboratorio04_av.Nav
 
-
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
@@ -10,12 +9,6 @@ import com.example.laboratorio04_av.View.TaskScreen
 import com.example.laboratorio04_av.ViewModel.GeneralViewModel
 import com.example.laboratorio04_av.ui.theme.Inicio
 
-object Routes {
-    const val TASK_SCREEN = "task_screen"
-
-    const val INICIO = "Inicio"
-}
-
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
@@ -23,15 +16,16 @@ fun Navigation() {
 
     NavHost(
         navController = navController,
-        startDestination = Routes.INICIO
+        startDestination = "Inicio"
     ) {
-        composable(Routes.INICIO) {
+        composable("Inicio") {
             Inicio(
                 navController = navController,
                 viewModel = generalViewModel
             )
         }
-        composable(Routes.TASK_SCREEN) {
+
+        composable("Greeting") {
             TaskScreen(
                 viewModel = generalViewModel
             )

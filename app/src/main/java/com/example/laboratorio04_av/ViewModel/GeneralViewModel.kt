@@ -1,23 +1,45 @@
 package com.example.laboratorio04_av.ViewModel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.laboratorio04_av.InitDatabase
 import com.example.laboratorio04_av.Model.Task
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 class GeneralViewModel : ViewModel() {
 
-    private val _tasks = MutableStateFlow<List<Task>>(emptyList())
-    val tasks: StateFlow<List<Task>> = _tasks.asStateFlow()
+    private val taskDao = InitDatabase.database.taskDao()
 
-    fun addTask(title: String, description: String) {
-        val newTask = Task(
-            id = _tasks.value.size + 1,
-            title = title,
-            description = description
+    val tasks: StateFlow<List<Task>> = taskDao.getAllTasks()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = emptyList()
         )
 
-        _tasks.value = _tasks.value + newTask
+    fun addTask(title: String, description: String) {
+        viewModelScope.launch {
+            val newTask = Task(
+                title = title,
+                description = description
+            )
+
+            taskDao.insertTask(newTask)
+        }
+    }
+
+    fun deleteTask(task: Task) {
+        viewModelScope.launch {
+            taskDao.deleteTask(task)
+        }
+    }
+
+    fun updateTaskStatus(id: Int, isComplete: Boolean) {
+        viewModelScope.launch {
+            taskDao.updateTaskStatus(id, isComplete)
+        }
     }
 }

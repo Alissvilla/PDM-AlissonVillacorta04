@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.laboratorio04_av.Model.Task
+import java.util.Date
 
 @Composable
 fun TaskCard(
@@ -35,6 +36,7 @@ fun TaskCard(
 
             if (task.description.isNotBlank()) {
                 Spacer(modifier = Modifier.height(4.dp))
+
                 Text(
                     text = "Descripción: " + task.description,
                     style = MaterialTheme.typography.bodyMedium,
@@ -45,7 +47,7 @@ fun TaskCard(
             Spacer(modifier = Modifier.height(4.dp))
 
             Text(
-                text = "Fecha: " + task.endDate.toString()
+                text = "Fecha: " + Date(task.endDate).toString()
             )
         }
     }
